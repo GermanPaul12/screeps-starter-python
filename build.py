@@ -340,56 +340,61 @@ def install_env(config):
     """
     if config.transcrypt_executable() is not None:
         return
-    if config.enter_env:
-        env_dir = os.path.join(config.base_dir, 'env')
 
-        if not os.path.exists(env_dir):
-            print("creating venv environment...")
-            args = ['python', '-m', 'venv', '--system-site-packages', env_dir]
+    try:
+        if config.enter_env:
+            env_dir = os.path.join(config.base_dir, 'env')
 
-            ret = subprocess.Popen(args, cwd=config.base_dir).wait()
+            if not os.path.exists(env_dir):
+                print("creating venv environment...")
+                args = ['python', '-m', 'venv', '--system-site-packages', env_dir]
 
-            if ret != 0:
-                raise Exception("venv failed. exit code: {}. command line '{}'. working dir: '{}'."
-                                .format(ret, "' '".join(args), config.base_dir))
+                ret = subprocess.Popen(args, cwd=config.base_dir).wait()
 
-        if not os.path.exists(os.path.join(env_dir, 'bin', 'transcrypt')) and not os.path.exists(
-                os.path.join(env_dir, 'scripts', 'transcrypt.exe')):
-            print("installing transcrypt into env...")
+                if ret != 0:
+                    raise Exception("venv failed. exit code: {}. command line '{}'. working dir: '{}'."
+                                    .format(ret, "' '".join(args), config.base_dir))
 
-            requirements_file = os.path.join(config.base_dir, 'requirements.txt')
+            if not os.path.exists(os.path.join(env_dir, 'bin', 'transcrypt')) and not os.path.exists(
+                    os.path.join(env_dir, 'scripts', 'transcrypt.exe')):
+                print("installing transcrypt into env...")
 
-            pip_executable = config.pip_executable()
+                requirements_file = os.path.join(config.base_dir, 'requirements.txt')
 
-            if not pip_executable:
-                raise Exception("pip binary not found at any of {}".format(possible_pip_binary_paths(config)))
+                pip_executable = config.pip_executable()
 
-            install_args = [pip_executable, 'install', '-r', requirements_file]
+                if not pip_executable:
+                    raise Exception("pip binary not found at any of {}".format(possible_pip_binary_paths(config)))
 
-            ret = subprocess.Popen(install_args, cwd=config.base_dir).wait()
+                install_args = [pip_executable, 'install', '-r', requirements_file]
 
-            if ret != 0:
-                raise Exception("pip install failed. exit code: {}. command line '{}'. working dir: '{}'."
-                                .format(ret, "' '".join(install_args), config.base_dir))
+                ret = subprocess.Popen(install_args, cwd=config.base_dir).wait()
 
-    else:
-        if not shutil.which('transcrypt'):
-            print("installing transcrypt using 'pip'...")
+                if ret != 0:
+                    raise Exception("pip install failed. exit code: {}. command line '{}'. working dir: '{}'."
+                                    .format(ret, "' '".join(install_args), config.base_dir))
+        else:
+            if not shutil.which('transcrypt'):
+                print("installing transcrypt using 'pip'...")
 
-            requirements_file = os.path.join(config.base_dir, 'requirements.txt')
+                requirements_file = os.path.join(config.base_dir, 'requirements.txt')
 
-            pip_executable = config.pip_executable()
+                pip_executable = config.pip_executable()
 
-            if not pip_executable:
-                raise Exception("pip binary not found at any of {}".format(possible_pip_binary_paths(config)))
+                if not pip_executable:
+                    raise Exception("pip binary not found at any of {}".format(possible_pip_binary_paths(config)))
 
-            install_args = [pip_executable, 'install', '-r', requirements_file]
+                install_args = [pip_executable, 'install', '-r', requirements_file]
 
-            ret = subprocess.Popen(install_args, cwd=config.base_dir).wait()
+                ret = subprocess.Popen(install_args, cwd=config.base_dir).wait()
 
-            if ret != 0:
-                raise Exception("pip install failed. exit code: {}. command line '{}'. working dir: '{}'."
-                                .format(ret, "' '".join(install_args), config.base_dir))
+                if ret != 0:
+                    raise Exception("pip install failed. exit code: {}. command line '{}'. working dir: '{}'."
+                                    .format(ret, "' '".join(install_args), config.base_dir))
+    except Exception as e:
+        print(f"An error occurred during environment setup: {e}")
+        sys.exit(1)
+
 
 def install_node_dependencies(config):
     """
