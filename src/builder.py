@@ -1,6 +1,5 @@
 from defs import *
-import harvester
-
+import energy
 __pragma__('noalias', 'name')
 __pragma__('noalias', 'undefined')
 __pragma__('noalias', 'Infinity')
@@ -17,35 +16,6 @@ def run(creep):
     :param creep: The creep to run
     """
 
-    # If we're full, stop filling up and remove the saved source
-    if creep.memory.filling and _.sum(creep.carry) >= creep.carryCapacity:
-        creep.memory.filling = False
-        del creep.memory.source
-    # If we're empty, start filling again and remove the saved target
-    elif not creep.memory.filling and creep.carry.energy <= 0:
-        creep.memory.filling = True
-        del creep.memory.target
-
-    if creep.memory.filling:
-        harvester.run(creep)
-    else:
-        target = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
-        is_close = creep.pos.inRangeTo(target, 3)
-
-        code = creep.build(target)
-        
-        if is_close:
-            if code == OK or code == ERR_FULL:
-                creep.say('🏗️ build')
-                del creep.memory.target
-            elif code == ERR_NOT_IN_RANGE:
-                creep.say('🚶‍♂️ move') 
-                creep.moveTo(target, '#4800FF')
-            elif code == ERR_NOT_OWNER:
-                print(f"{creep} lost in {creep.room}")  
-            elif code == ERR_NO_BODYPART:
-                creep.say("☠️ suicide")
-                creep.suicide()         
-        else:
-            creep.say('🚶‍♂️ move')
-            creep.moveTo(target, '#4800FF')   
+    energy.get(creep)
+    target = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    energy.give(creep, target, 3)

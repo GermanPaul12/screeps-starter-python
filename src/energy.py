@@ -37,23 +37,25 @@ def get(creep, source=None):
             if result != OK:
                 print("[{}] Unknown result from creep.harvest({}): {}".format(creep.name, source, result))
         else:
-            creep.moveTo(source)
+            creep.moveTo(source, )
             creep.say("🚶‍♂️ move")
 
-def give(creep, target=None, range=0):
+def give(creep, target=None, range=3, role="upgrader"):
     """
     Gives energy to target
     """
     if not target: creep.room.controller
     creep.memory.target = target
-    if target.energyCapacity:
+    if role == "harvester" and target.energyCapacity:
         is_close = creep.pos.isNearTo(target)
     else:
-        is_close = creep.pos.inRangeTo(target, 3)
+        is_close = creep.pos.inRangeTo(target, range)
 
     if is_close:
         # If we are targeting a spawn or extension, transfer energy. Otherwise, use upgradeController on it.
-        code = creep.transferEnergy(target)
+        if role == "upgrader": code = creep.upgradeController(target)
+        elif role == "builder": code = creep.build(target)
+        else: code = creep.transferEnergy(target)
         if is_close:
             if code == OK or code == ERR_FULL:
                 creep.say('⚡ tranfer')
@@ -70,4 +72,4 @@ def give(creep, target=None, range=0):
             creep.say('🚶‍♂️ move')
             creep.moveTo(target, '#4800FF')  
     else:
-        creep.moveTo(target)
+        creep.moveTo(target, '#4800FF')
