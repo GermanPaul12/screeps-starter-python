@@ -48,17 +48,17 @@ def run(creep):
         
         if is_close:
             if code == OK or code == ERR_FULL:
-                creep.emote('⚡ upgrade')
+                creep.say('⚡ upgrade')
                 del creep.memory.target
             elif code == ERR_NOT_IN_RANGE or not creep.pos.inRangeTo(target, 2):
-                creep.emote('🚶‍♂️ move') 
+                creep.say('🚶‍♂️ move') 
                 creep.moveTo(target, '#4800FF')
             elif code == ERR_NOT_OWNER:
                 print(f"{creep} lost in {creep.room}")  
             elif code == ERR_NO_BODYPART:
-                creep.emote("☠️ suicide")
+                creep.say("☠️ suicide")
                 creep.suicide()         
         else:
-            creep.emote('🚶‍♂️ move')
+            creep.say('🚶‍♂️ move')
             creep.moveTo(target, '#4800FF')   
 

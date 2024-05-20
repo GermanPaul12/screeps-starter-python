@@ -37,12 +37,12 @@ def run(creep):
         # If we're near the source, harvest it - otherwise, move to it.
         if creep.pos.isNearTo(source):
             result = creep.harvest(source)
-            creep.emote("🔋 charge")
+            creep.say("🔋 charge")
             if result != OK:
                 print("[{}] Unknown result from creep.harvest({}): {}".format(creep.name, source, result))
         else:
             creep.moveTo(source)
-            creep.emote("🚶‍♂️ move")
+            creep.say("🚶‍♂️ move")
     else:
         # If we have a saved target, use it
         if creep.memory.target:

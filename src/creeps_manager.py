@@ -21,9 +21,10 @@ def manage():
         creep = Game.creeps[name]
         # if creep is still spawning skip him
         if creep.spawning: continue
-        if creep.ticksToLive == 1: creep.emote("☠️Dying")
+        if creep.ticksToLive == 1: creep.say("☠️Dying")
         # Run creep depending on role
+        if not creep.memory.role: creep.memory.role = "harvester"
         if creep.memory.role == "harvester": harvester.run(creep)
-        if creep.memory.role == "upgrader": updgrader.run(creep)
+        if creep.memory.role == "upgrader": upgrader.run(creep)
         if creep.memory.role == "builder": builder.run(creep)
         
