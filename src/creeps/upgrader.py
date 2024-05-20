@@ -16,16 +16,6 @@ def run(creep):
     Runs a creep as a generic upgrader.
     :param creep: The creep to run
     """
-
-    # If we're full, stop filling up and remove the saved source
-    if creep.memory.filling and _.sum(creep.carry) >= creep.carryCapacity:
-        creep.memory.filling = False
-        del creep.memory.source
-    # If we're empty, start filling again and remove the saved target
-    elif not creep.memory.filling and creep.carry.energy <= 0:
-        creep.memory.filling = True
-        del creep.memory.target
-
     if creep.memory.filling:
         harvester.run(creep)
     else:
@@ -48,7 +38,7 @@ def run(creep):
         
         if is_close:
             if code == OK or code == ERR_FULL:
-                creep.say('⚡ upgrade')
+                creep.say('⚡ tranfer')
                 del creep.memory.target
             elif code == ERR_NOT_IN_RANGE or not creep.pos.inRangeTo(target, 2):
                 creep.say('🚶‍♂️ move') 
