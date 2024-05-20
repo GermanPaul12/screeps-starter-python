@@ -40,10 +40,11 @@ def get(creep, source=None):
             creep.moveTo(source)
             creep.say("🚶‍♂️ move")
 
-def give(creep, target=creep.room.controller, range=0):
+def give(creep, target=None, range=0):
     """
     Gives energy to target
     """
+    if not target: creep.room.controller
     creep.memory.target = target
     if target.energyCapacity:
         is_close = creep.pos.isNearTo(target)
@@ -52,6 +53,7 @@ def give(creep, target=creep.room.controller, range=0):
 
     if is_close:
         # If we are targeting a spawn or extension, transfer energy. Otherwise, use upgradeController on it.
+        code = creep.transferEnergy(target)
         if is_close:
             if code == OK or code == ERR_FULL:
                 creep.say('⚡ tranfer')

@@ -1,5 +1,5 @@
 from defs import *
-import creeps.harvester as harvester
+import harvester
 
 __pragma__('noalias', 'name')
 __pragma__('noalias', 'undefined')
