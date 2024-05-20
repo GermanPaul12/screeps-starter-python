@@ -1,6 +1,6 @@
-import harvester
 import spawn
 import creeps_manager
+import utils
 # defs is a package which claims to export all constants and some JavaScript objects, but in reality does
 #  nothing. This is useful mainly when using an editor like PyCharm, so that it 'knows' that things like Object, Creep,
 #  Game, etc. do exist.
@@ -23,7 +23,9 @@ def main():
     """
     Main game logic loop.
     """
-
+    # garbage collector
+    utils.garbage_collector()
+    
     # Run each creep
     creeps_manager.manage()
 

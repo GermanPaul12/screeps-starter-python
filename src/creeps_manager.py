@@ -16,6 +16,7 @@ def manage():
     """
     Manages all existing creeps
     """
+
     # Run each creep
     for name in Object.keys(Game.creeps):
         creep = Game.creeps[name]
