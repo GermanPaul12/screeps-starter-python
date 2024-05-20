@@ -10,7 +10,7 @@ __pragma__('noalias', 'type')
 __pragma__('noalias', 'update')
 
 
-def run_harvester(creep):
+def run(creep):
     """
     Runs a creep as a generic harvester.
     :param creep: The creep to run
@@ -37,10 +37,12 @@ def run_harvester(creep):
         # If we're near the source, harvest it - otherwise, move to it.
         if creep.pos.isNearTo(source):
             result = creep.harvest(source)
+            creep.emote("🔋 charge")
             if result != OK:
                 print("[{}] Unknown result from creep.harvest({}): {}".format(creep.name, source, result))
         else:
             creep.moveTo(source)
+            creep.emote("🚶‍♂️ move")
     else:
         # If we have a saved target, use it
         if creep.memory.target:
