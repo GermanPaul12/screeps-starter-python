@@ -32,14 +32,14 @@ def main():
     """
     Main game logic loop.
     """
-    # garbage collector
-    utils.garbage_collector()
-    
     # Run each creep
     creeps_manager.manage()
 
     # Spawn logic
     spawn.spawn_creeps()
+    
+    # garbage collector
+    utils.garbage_collector()
 
 
 module.exports.loop = main
