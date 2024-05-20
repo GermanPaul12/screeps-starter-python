@@ -45,21 +45,27 @@ def spawn_creeps():
             num_builders = _.sum(Game.creeps, lambda c: c.pos.roomName == spawn.pos.roomName and c.memory.role == "builder")
             num_creeps = [num_harvesters, num_upgraders, num_builders]
             creep_types = ["harvester", "upgrader", "builder"]
-            creeps_definions = [{"parts": [WORK, WORK, CARRY, MOVE], "minEnergy": 300, "memory":{"role":role, "filling": True}}, {"parts": [WORK, CARRY, CARRY, MOVE, MOVE], "minEnergy": 300, "memory":{"role":role, "full": False}},
-                                {"parts": [WORK, CARRY, CARRY, MOVE, MOVE], "minEnergy": 300, "memory":{"role":role, "filling": True}}]
+            creeps_definions = [{"parts": [WORK, WORK, CARRY, MOVE], "minEnergy": 300}, 
+                                {"parts": [WORK, CARRY, CARRY, MOVE, MOVE], "minEnergy": 300},
+                                {"parts": [WORK, CARRY, CARRY, MOVE, MOVE], "minEnergy": 300}]
+            ind = 0
             # If there are no creeps, spawn one creep of each type once energy is at 300 or more
-            for ind,creep_type_amnt in enumerate(num_creeps):
+            for creep_type_amnt in num_creeps:
                 creep_type = creeps_definions[ind]
                 role = creep_types[ind]
+                print(f"Number of {creep_types[ind]}: {num_creeps[ind]}")
                 if creep_type_amnt <= 0 and spawn.room.energyAvailable >= creep_type["minEnergy"]:
-                    spawn.createCreep(creep_type["parts"], f"{role}{Game.time}", creep_type["memory"])
+                    spawn.createCreep(creep_type["parts"], f"{role}{Game.time}", {"role":role, "filling": True})
+                ind += 1
+            ind = 0        
             # If we have one creep of each type and energy is available spawn more
-            for ind,creep_type_amnt in enumerate(num_creeps):
+            for creep_type_amnt in num_creeps:
                 creep_type = creeps_definions[ind]
                 role = creep_types[ind]
                 min_amount_creeps = creeps_amount[current_controller_lvl][role]
                 if creep_type_amnt <= min_amount_creeps and spawn.room.energyAvailable >= creep_type["minEnergy"]:
                     spawn.createCreep(creep_type["parts"], f"{role}{Game.time}", creep_type["memory"])
+                ind += 1    
             # If we have all minimum creeps and have enough energy spawn default creep
-            if spawn.room.energyAvailable >= creep_type["minEnergy"]: spawn.createCreep(creeps_definions[1]["parts"], f"Upgrader{Game.time}", creep_type["memory"])   
+            if spawn.room.energyAvailable >= 300: spawn.createCreep(creeps_definions[1]["parts"], f"Upgrader{Game.time}", {"role":"upgrader", "filling": True})   
   
