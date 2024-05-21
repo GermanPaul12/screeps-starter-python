@@ -56,7 +56,7 @@ def spawn_creeps():
             for i in range(len(creep_types)):
                 creep_type = creep_types[i]
                 print(f"Energy available: {spawn.room.energyAvailable}, Creep Type: {Memory.amount.creep_type}, Min Energy: {creeps_definions[i]["minEnergy"]}")
-                if Memory.amount.creep_type <= 0 and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
+                if Memory.amount[creep_type] <= 0 and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
                     print(f"Trying to spawn first {creep_type}")
                     spawn.createCreep(creeps_definions[i]["parts"], f"{role}{Game.time}", {"role":creep_type, "filling": True})
                     Memory.amount[creep_type] += 1
@@ -66,7 +66,7 @@ def spawn_creeps():
                 current_controller_lvl = StructureController.level
                 min_amount_creeps = creeps_amount[current_controller_lvl][creep_type]
                 print(f"Number of {creep_type}: {Memory.amount.creep_type}")
-                if Memory.amount.creep_type <= min_amount_creeps and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
+                if Memory.amount[creep_type] <= min_amount_creeps and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
                     spawn.createCreep(creeps_definions[i]["parts"], f"{role}{Game.time}", {"role":creep_type, "filling": True})
                     Memory.amount[creep_type] += 1
             else:
