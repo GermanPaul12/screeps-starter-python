@@ -347,7 +347,11 @@ def install_env(config):
 
             if not os.path.exists(env_dir):
                 print("creating venv environment...")
-                args = ['python', '-m', 'venv', '--system-site-packages', env_dir]
+                try: args = ['python', '-m', 'venv', '--system-site-packages', env_dir]
+                except Exception as e:
+                    args = ['python3', '-m', 'venv', '--system-site-packages', env_dir]  
+                    print(e)
+                    print("error creating virtual environment. Trying with python3 instead of python")  
 
                 ret = subprocess.Popen(args, cwd=config.base_dir).wait()
 
