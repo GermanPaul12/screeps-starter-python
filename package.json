@@ -18,5 +18,9 @@
   "homepage": "https://github.com/daboross/screeps-starter-python#readme",
   "devDependencies": {
     "rollup": "^2.35.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.17.4",
+    "@types/screeps": "^3.3.8"
   }
 }

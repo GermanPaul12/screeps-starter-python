@@ -58,7 +58,7 @@ def spawn_creeps():
 
             for i in range(len(creep_types)):
                 creep_type = creep_types[i]
-                print(f"Energy available: {spawn.room.energyAvailable}, Creep Type: {Memory.amount[creep_type]}, Min Energy: {creeps_definions[i]["minEnergy"]}")
+                print(f"Energy available: {spawn.room.energyAvailable}, Creep Type: {creep_type}, Creep Amount: {Memory.amount[creep_type]},Min Energy: {creeps_definions[i]["minEnergy"]}")
                 if Memory.amount[creep_type] <= 0 and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
                     print(f"Trying to spawn first {creep_type}")
                     spawn.createCreep(creeps_definions[i]["parts"], f"{role}{Game.time}", {"role":creep_type, "filling": True})
@@ -72,10 +72,10 @@ def spawn_creeps():
                 if Memory.amount[creep_type] <= min_amount_creeps and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
                     spawn.createCreep(creeps_definions[i]["parts"], f"{role}{Game.time}", {"role":creep_type, "filling": True})
                     Memory.amount[creep_type] += 1
-            else:
-                # If we have all minimum creeps and have enough energy spawn default creep
-                if spawn.room.energyAvailable >= 300: 
-                    spawn.createCreep(creeps_definions[1]["parts"], f"Upgrader{Game.time}", {"role":"upgrader", "filling": True})
-                    Memory.amount["upgrader"] += 1
+            
+            # If we have all minimum creeps and have enough energy spawn default creep
+            if spawn.room.energyAvailable >= 300: 
+                spawn.createCreep(creeps_definions[1]["parts"], f"Upgrader{Game.time}", {"role":"upgrader", "filling": True})
+                Memory.amount["upgrader"] += 1
             
             
