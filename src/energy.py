@@ -69,7 +69,9 @@ def give(creep, target=None, range=3, role="upgrader"):
                 print(f"{creep} lost in {creep.room}")  
             elif code == ERR_NO_BODYPART:
                 creep.say("☠️ suicide")
-                creep.suicide()         
+                creep.suicide()       
+            elif code == ERR_NOT_ENOUGH_ENERGY:
+                creep.memory.filling = True      
         else:
             creep.say('🚶‍♂️ move')
             creep.moveTo(target, '#4800FF')  

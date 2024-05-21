@@ -16,7 +16,7 @@ def run(creep):
     Runs a creep as a generic harvester.
     :param creep: The creep to run
     """
-    energy.get(creep)
+    if creep.memory.filling: energy.get(creep)
     
     # Get a random new target.
     target = _(creep.room.find(FIND_STRUCTURES)) \
@@ -24,4 +24,4 @@ def run(creep):
                             and s.energy < s.energyCapacity) or s.structureType == STRUCTURE_CONTROLLER) \
         .sample()
     creep.memory.target = target.id
-    energy.give(creep, target, 1, "harvester")
+    if not creep.memory.filling: energy.give(creep, target, 1, "harvester")
