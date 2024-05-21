@@ -11,6 +11,8 @@ __pragma__('noalias', 'update')
 
 
 def garbage_collector():
+    # if we have no creeps return
+    if not Memory.creeps: return
     # delete deceased creeps
     for name in Object.keys(Memory.creeps):
         if not Game.creeps[name]:

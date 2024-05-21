@@ -17,5 +17,6 @@ def run(creep):
     """
 
     energy.get(creep)
-    target = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    creep.memory.target = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    target = creep.memory.target
     energy.give(creep, target, 3)
