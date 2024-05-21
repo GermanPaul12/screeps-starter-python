@@ -41,11 +41,13 @@ def spawn_creeps():
         if not spawn.spawning:
             # Get the number of our creeps in the room.
             creep_types = ["harvester", "upgrader", "builder"]
-            Memory.amount = {role:0 for role in creep_types}
+            Memory.amount = {}
+            for role in creep_types:
+                Memory.amount.role = 0
             for name in Object.keys(Game.creeps):
                 creep = Game.creeps[name]
                 role = creep.memory.role
-                Memory.amount[role] += 1
+                Memory.amount.role. += 1
             
             creeps_definions = [{"parts": [WORK, CARRY, MOVE], "minEnergy": 200}, 
                                 {"parts": [WORK, CARRY, MOVE, MOVE], "minEnergy": 250},
