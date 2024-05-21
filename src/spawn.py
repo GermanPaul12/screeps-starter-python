@@ -38,6 +38,7 @@ def spawn_creeps():
     # Run each spawn
     for name in Object.keys(Game.spawns):
         spawn = Game.spawns[name]
+        print(f"Executing spawn logic for spawn: {spawn.name}")
         if not spawn.spawning:
             # Get the number of our creeps in the room.
             creep_types = ["harvester", "upgrader", "builder"]
@@ -47,7 +48,8 @@ def spawn_creeps():
             for name in Object.keys(Game.creeps):
                 creep = Game.creeps[name]
                 role = creep.memory.role
-                Memory.amount.role. += 1
+                Memory.amount.role += 1
+            print("Memory amount created: " + Memory.amount)
             
             creeps_definions = [{"parts": [WORK, CARRY, MOVE], "minEnergy": 200}, 
                                 {"parts": [WORK, CARRY, MOVE, MOVE], "minEnergy": 250},
@@ -55,7 +57,7 @@ def spawn_creeps():
 
             for i in range(len(creep_types)):
                 creep_type = creep_types[i]
-                print(f"Energy available: {spawn.room.energyAvailable}, Creep Type: {Memory.amount.creep_type}, Min Energy: {creeps_definions[i]["minEnergy"]}")
+                print(f"Energy available: {spawn.room.energyAvailable}, Creep Type: {Memory.amount[creep_type]}, Min Energy: {creeps_definions[i]["minEnergy"]}")
                 if Memory.amount[creep_type] <= 0 and spawn.room.energyAvailable >= creeps_definions[i]["minEnergy"]:
                     print(f"Trying to spawn first {creep_type}")
                     spawn.createCreep(creeps_definions[i]["parts"], f"{role}{Game.time}", {"role":creep_type, "filling": True})
