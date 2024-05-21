@@ -43,12 +43,13 @@ def spawn_creeps():
             # Get the number of our creeps in the room.
             creep_types = ["harvester", "upgrader", "builder"]
             Memory.amount = {}
-            for role in creep_types:
-                Memory.amount.role = 0
+            for i in range(len(creep_types)):
+                creep_type = creep_types[i]
+                Memory.amount[creep_type] = 0
             for name in Object.keys(Game.creeps):
                 creep = Game.creeps[name]
-                role = creep.memory.role
-                Memory.amount.role += 1
+                role = creep.memory[creep_type]
+                Memory.amount[creep_type] += 1
             print("Memory amount created: " + Memory.amount)
             
             creeps_definions = [{"parts": [WORK, CARRY, MOVE], "minEnergy": 200}, 
